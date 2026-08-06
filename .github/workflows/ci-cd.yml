@@ -23,11 +23,19 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check runner
+        run: |
+          echo "Runner is working"
+          uname -a
+          docker --version
+          docker compose version
+
       - name: Build backend image
         run: |
           docker build \
-            -f Dockerfile \
-            -t ghcr.io/${{ github.repository_owner }}/project2-backend:latest .
+            -f backend/Dockerfile \
+            -t ghcr.io/${{ github.repository_owner }}/project2-backend:latest \
+            ./backend
 
       - name: Push backend image
         run: |
@@ -36,15 +44,10 @@ jobs:
       - name: Build frontend image
         run: |
           docker build \
-            -f Dockerfile \
-            -t ghcr.io/${{ github.repository_owner }}/project2-frontend:latest .
+            -f frontend/Dockerfile \
+            -t ghcr.io/${{ github.repository_owner }}/project2-frontend:latest \
+            ./frontend
 
       - name: Push frontend image
         run: |
           docker push ghcr.io/${{ github.repository_owner }}/project2-frontend:latest
-- name: Check runner
-  run: |
-    echo "Runner is working"
-    uname -a
-    docker --version
-    docker compose version
