@@ -43,3 +43,9 @@ jobs:
       - name: Push frontend image
         run: |
           docker push ghcr.io/${{ github.repository_owner }}/project2-frontend:latest
+- name: Check runner
+  run: |
+    echo "Runner is working"
+    uname -a
+    docker --version
+    docker compose version
